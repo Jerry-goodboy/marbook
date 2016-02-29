@@ -33,4 +33,5 @@ Route::any('service/validate_code/create', 'Service\ValidateController@create');
 Route::any('service/validate_phone/send', 'Service\ValidateController@sendSMS');//请求发送短信验证
 Route::any('service/validate_email', 'Service\ValidateController@validateEmail');//验证邮箱请求
 Route::post('service/register', 'Service\MemberController@register');//注册请求
+//Route::any('sendMes', 'Service\ValidateController@sendSMS');//请求发送短信验--测试
 

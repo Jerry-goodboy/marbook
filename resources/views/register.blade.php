@@ -99,7 +99,96 @@
             if($(this).attr('id') == 'x11') {
                 $('#x11').next().show();//显示当前的带钩
                 $('#x12').next().hide();//
+                $('.weui_cells_form').eq(0).show();//显示排列的第一个表单---电话注册区域
+                $('.weui_cells_form').eq(1).hide();//邮箱区域隐藏
+            }else if($(this).attr('id') == 'x12'){
+                $('#x12').next().show();//显示当前的带钩
+                $('#x11').next().hide();//
+                $('.weui_cells_form').eq(0).hide();
+                $('.weui_cells_form').eq(1).show();
             }
         });
+
+        $('.bk_validate_code').click(function(){
+           $(this).attr('src','/service/validate_code/create?random='+ Math.random());
+        });
+
+        var enable = true;//判断当前是否进入验证码发送流程
+        $('.bk_phone_code_send').click(function(){
+            if(enable == false) {
+                return;
+            }
+
+            var phone = $('input[name = phone]').val();
+            if(phone == '') {
+                $('.bk_toptips').show();
+                $('.bk_toptips span').html('请输入手机号');
+                setTimeout(function(){$('.bk_toptips').hide()},2000);
+                return;
+            }
+
+            if(phone.length != 11 || phone[0] != '1' || !(/^1[3|4|5|7|8]\d{9}$/.test(phone))) {
+                $('.bk_toptips').show();
+                $('.bk_toptips span').html('手机格式不正确');
+                setTimeout(function(){$('.bk_toptips').hide()},2000);
+                return;
+            }
+
+            $(this).removeClass('bk_important');
+            $(this).addClass('bk_summary');
+            enable = false;
+            var num = 60;
+            var interval = window.setInterval(function(){
+                $('.bk_phone_code_send').html(--num+'s 重新发送');
+                if(num == 0) {
+                    $('.bk_phone_code_send').removeClass('bk_summary');
+                    $('.bk_phone_code_send').addClass('bk_important');
+
+                    enable = true;
+                    window.clearInterval(interval);
+                    $('.bk_phone_code_send').html('重新发送');
+                }
+            },1000);
+
+            $.ajax({
+                url:'/service/validate_phone/send',
+                dataType:'json',
+                cache:'false',
+                data:{phone:phone},
+                success: function (data) {
+                    if(data == null) {
+                        $('.bk_toptips').show();
+                        $('.bk_toptips span').html('服务端错误');
+                        setTimeout(function(){$('.bk_toptips').hide();},2000);
+                        return;
+                    }
+                    console.log(data);
+                    if(data.status != 0) {
+                        //网络失败
+                        $('.bk_toptips').show();
+                        $('.bk_toptips span').html(data.message);
+                        setTimeout(function(){$('.bk_toptips').hide();}, 2000);
+                        return;
+                    }
+
+                    //成功
+                    $('.bk_toptips').show();
+                    $('.bk_toptips span').html('发送成功');
+                    setTimeout(function() {$('.bk_toptips').hide();}, 2000);
+                },
+                error:function(xhr, status, error) {
+                    console.log(xhr);
+                    console.log(status);
+                    console.log(error);
+                }
+            });
+        });
+
+        function onRegisterClick() {
+
+        }
+
     </script>
+
+
 @endsection

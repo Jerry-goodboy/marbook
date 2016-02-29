@@ -12,7 +12,7 @@
         @yield('content')
     </div>
 
-    <!-- tooltips -->
+    <!--tip显示区域 -->
     <div class="bk_toptips"><span></span></div>
     <div id="global_menu" onclick="onMenuClick();">
         <div></div>
