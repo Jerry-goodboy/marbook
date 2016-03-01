@@ -65,6 +65,8 @@ class ValidateController extends Controller
             $code .= $charset[mt_rand(0, $_len)];
         }
         //生成验证码
+
+
         $m3_result = $sendTemplateSMS->sendTemplateSMS($phone,array($code, 60),1);
         if ($m3_result->status == 0) {
             $tempPhone = TempPhone::where('phone',$phone)->first();
