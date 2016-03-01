@@ -64,8 +64,7 @@ class ValidateController extends Controller
         for ($i = 0;$i < 6;++$i) {
             $code .= $charset[mt_rand(0, $_len)];
         }
-        //生成验证码
-
+        //生成验证码--的代码
 
         $m3_result = $sendTemplateSMS->sendTemplateSMS($phone,array($code, 60),1);
         if ($m3_result->status == 0) {
