@@ -6,9 +6,9 @@ use app\Entity\TempPhone;
 use App\Models\M3Result;
 use App\Tool\SMS\SendTemplateSMS;
 use App\Tool\Validate\ValidateCode;
+use Barryvdh\Debugbar\Middleware\Debugbar;
 use Illuminate\Http\Request;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 class ValidateController extends Controller
@@ -59,22 +59,24 @@ class ValidateController extends Controller
         $sendTemplateSMS = new SendTemplateSMS;
         $code = '';
         $charset = '1234567890';
-
         $_len = strlen($charset) - 1;
         for ($i = 0;$i < 6;++$i) {
             $code .= $charset[mt_rand(0, $_len)];
         }
         //生成验证码--的代码
 
-        $m3_result = $sendTemplateSMS->sendTemplateSMS($phone,array($code, 60),1);
+        //$m3_result = $sendTemplateSMS->sendTemplateSMS($phone,array($code, 60),1);
+        app('debugbar')->warning('SMS..');
         if ($m3_result->status == 0) {
             $tempPhone = TempPhone::where('phone',$phone)->first();
+            Debugbar::addMessage('where',$tempPhone);
             if ($tempPhone == null) {
                 $tempPhone = new TempPhone;
             }
             $tempPhone->phone = $phone;
             $tempPhone->code = $code;
             $tempPhone->deadline = date('Y-m-d H-i-s',time()+60*60);//过期时间---60分钟后过期
+            Debugbar::info($tempPhone);
             $tempPhone->save();
         }
         return $m3_result->toJson();

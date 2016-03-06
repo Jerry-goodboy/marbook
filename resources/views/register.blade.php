@@ -149,7 +149,6 @@
                     $('.bk_phone_code_send').html('重新发送');
                 }
             },1000);
-
             $.ajax({
                 url:'/service/validate_phone/send',
                 dataType:'json',
