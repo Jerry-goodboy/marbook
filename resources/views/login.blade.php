@@ -10,19 +10,19 @@
         <div class="weui_cell">
             <div class="weui_cell_hd"><label class="weui_label">帐号</label></div>
             <div class="weui_cell_bd weui_cell_primary">
-                <input class="weui_input" type="tel" placeholder="邮箱或手机号"/>
+                <input class="weui_input" type="tel" placeholder="邮箱或手机号" name="username"/>
             </div>
         </div>
         <div class="weui_cell">
             <div class="weui_cell_hd"><label class="weui_label">密码</label></div>
             <div class="weui_cell_bd weui_cell_primary">
-                <input class="weui_input" type="tel" placeholder="不少于6位"/>
+                <input class="weui_input" type="password" placeholder="不少于6位" name="password"/>
             </div>
         </div>
         <div class="weui_cell weui_vcode">
             <div class="weui_cell_hd"><label class="weui_label">验证码</label></div>
             <div class="weui_cell_bd weui_cell_primary">
-                <input class="weui_input" type="number" placeholder="请输入验证码"/>
+                <input class="weui_input" type="text" placeholder="请输入验证码" name="validate_code"/>
             </div>
             <div class="weui_cell_ft">
                 <img src="/service/validate_code/create" class="bk_validate_code"/>
@@ -44,7 +44,84 @@
         });
 
         function onLoginClick() {
-            alert("登录");
+
+            var username = '';
+            var password = '';
+            var validate_code = '';
+            username = $('input[name=username]').val();
+            password = $('input[name=password]').val();
+            validate_code = $('input[name=validate_code]').val();
+            if(!verifyLogin(username,password,validate_code)) {
+                return;
+            }
+            //验证成功---请求验证
+            $.ajax({
+                type:"POST",
+                url:"/service/login",
+                dataType: 'json',
+                cache: false,
+                data: {username: username, password: password, validate_code: validate_code,
+                    _token: "{{csrf_token()}}"},
+                success: function(data){
+                    if(data == null) {
+                        $('.bk_toptips').show();
+                        $('.bk_toptips span').html('服务端错误');
+                        setTimeout(function() {$('.bk_toptips').hide();}, 2000);
+                        return;
+                    }
+
+                    if(data.status !=0) {
+                        $('.bk_toptips').show();
+                        $('.bk_toptips span').html(data.message);
+                        setTimeout(function() {$('.bk_toptips').hide();}, 2000);
+                        return;
+                    }
+
+                    $('.bk_toptips').show();
+                    $('.bk_toptips span').html('登录成功');
+                    setTimeout(function() {$('.bk_toptips').hide();}, 2000);
+                    //转到详情界面
+                    location.href = '/category';
+                },
+                error: function(xhr, status, error) {
+                    console.log(xhr.responseText);
+                    console.log(xhr);
+                    console.log(status);
+                    console.log(error);
+                }
+            });
+        }
+
+        function verifyLogin(username, password, validate_code) {
+            if(username == '') {
+                $('.bk_toptips').show();
+                $('.bk_toptips span').html('注册用户名不能为空');
+                setTimeout(function() {$('.bk_toptips').hide();}, 2000);
+                return false;
+            }
+
+            if(password == '') {
+                $('.bk_toptips').show();
+                $('.bk_toptips span').html('密码不能为空');
+                setTimeout(function() {$('.bk_toptips').hide();}, 2000);
+                return false;
+            }
+
+            if(password.length < 6) {
+                $('.bk_toptips').show();
+                $('.bk_toptips span').html('密码不能小于6位');
+                setTimeout(function() {$('.bk_toptips').hide();}, 2000);
+                return false;
+            }
+
+            if(validate_code == ''|| validate_code.length != 4) {
+                $('.bk_toptips').show();
+                $('.bk_toptips span').html('验证码不正确');
+                setTimeout(function() {$('.bk_toptips').hide();}, 2000);
+                return false;
+            }
+
+            return true;
         }
     </script>
 @endsection

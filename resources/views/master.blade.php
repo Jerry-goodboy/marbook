@@ -8,15 +8,22 @@
     <link rel="stylesheet" href="/css/book.css">
 </head>
 <body>
+
+    <div>
+
+    </div>
+
     <div class="page">
         @yield('content')
     </div>
 
     <!--tip显示区域 -->
     <div class="bk_toptips"><span></span></div>
-    <div id="global_menu" onclick="onMenuClick();">
-        <div></div>
-    </div>
+
+
+    {{--<div id="global_menu" onclick="onMenuClick();">--}}
+        {{--<div></div>--}}
+    {{--</div>--}}
 
     <!--BEGIN actionSheet-->
     <div id="actionSheet_wrap">
@@ -36,9 +43,48 @@
 </body>
 <script src="/js/jquery-1.11.2.min.js"></script>
 <script type="text/javascript">
-function hideActionSheet(weuiActionsheet, mask) {
+    function hideActionSheet(weuiActionsheet, mask) {
+        weuiActionsheet.removeClass('weui_actionsheet_toggle');
+        mask.removeClass('weui_fade_toggle');
+        weuiActionsheet.on('transitionend', function () {
+            mask.hide();
+        }).on('webkitTransitionEnd', function () {
+            mask.hide();
+        })
+    }
+    function onMenuClick() {
+        var mask = $('#mask');
+        var weuiActionsheet = $('#weui_actionsheet');
+        weuiActionsheet.addClass('weui_actionsheet_toggle');
+        mask.show().addClass('weui_fade_toggle').click(function () {
+            hideActionSheet(weuiActionsheet, mask);
+        });
 
-}
+        $('#actionsheet_cancel').click(function () {
+            hideActionSheet(weuiActionsheet, mask);
+        });
+
+        weuiActionsheet.unbind('transitionend').unbind('webkitTransitionEnd');
+    }
+
+
+    function onMenuItemClick(index) {
+        var mask = $('#mask');
+        var weuiActionsheet = $('#weui_actionsheet');
+        hideActionSheet(weuiActionsheet, mask);
+
+        if(index == 1) {
+
+        } else if(index == 2) {
+
+        } else if(index == 3){
+
+        } else {
+            $('.bk_toptips').show();
+            $('.bk_toptips span').html("敬请期待!");
+            setTimeout(function() {$('.bk_toptips').hide();}, 2000);
+        }
+    }
 </script>
 
 @yield('my-js')
