@@ -57,7 +57,8 @@
 
                     $('.category_list').html('');
                     for(var i=0;i<data.categorys.length;i++) {
-                        var cate = '<a class="weui_cell" href="javascript:;">'+
+                        var url_product = 'cate'  ;
+                        var cate = '<a class="weui_cell" href="'+url_product+'">'+
                                 '<div class="weui_cell_bd weui_cell_primary">'+
                                 '<p>'+data.categorys[i].name+'</p>'+
                                 '</div>'+

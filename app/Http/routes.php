@@ -27,6 +27,8 @@ Route::get('/login', 'View\MemberController@toLogin');
 Route::get('/register', 'View\MemberController@toRegister');
 
 Route::get('/category', 'View\BookController@toCategory');
+Route::get('/category/product/{category_id}', 'View\BookController@productByCategoryId');
+
 
 /**
  * 接口---请求

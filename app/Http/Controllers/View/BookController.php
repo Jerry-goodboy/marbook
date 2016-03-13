@@ -4,6 +4,7 @@ namespace App\Http\Controllers\View;
 
 
 use App\Entity\Category;
+use App\Entity\Product;
 use App\Http\Controllers\Controller;
 
 class BookController extends Controller
@@ -14,8 +15,9 @@ class BookController extends Controller
         return view('category')->with('categorys',$categorys);
     }
 
-    public function toRegister($value='')
+    public function productByCategoryId($category_id)
     {
-        return view('register');
+        $products = Product::where('category_id',$category_id)->get();
+        return view('produces')-with('$products',$products);
     }
 }
