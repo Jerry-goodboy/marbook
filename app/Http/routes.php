@@ -26,9 +26,7 @@ Route::get('/', function(){
 Route::get('/login', 'View\MemberController@toLogin');
 Route::get('/register', 'View\MemberController@toRegister');
 
-Route::any('/category', function(){
-   return view('/category');
-});
+Route::get('/category', 'View\BookController@toCategory');
 
 /**
  * 接口---请求
@@ -39,7 +37,8 @@ Route::group(['prefix' => 'service'], function(){
     Route::post('validate_phone/send', 'Service\ValidateController@sendSMS');//请求发送短信验证
     Route::get('validate_email', 'Service\ValidateController@validateEmail');//验证邮箱请求
     Route::post('register', 'Service\MemberController@register');//注册请求
-    Route::post('login', 'Svervice\MemberController@login');//登录
+    Route::post('login', 'Service\MemberController@login');//登录
+    Route::get('category/parent_id/{parent_id}','Service\BookController@getCategoryByParentId');
 });
 
 
