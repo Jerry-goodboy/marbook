@@ -5,7 +5,7 @@
 @section('title','书籍列表')
 
 @section('content')
-    <div class="weui_cells_title">书籍列表</div>
+    <div class="weui_cells_title ">书籍列表</div>
     <div class="weui_cells weui_cells_access">
         @foreach($products as $product)
             <a class="weui_cell" href="javascript:;">
