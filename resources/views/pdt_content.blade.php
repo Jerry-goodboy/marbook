@@ -56,7 +56,8 @@
 @endsection
 
 @section('my-js')
-<script type="text/javascript">
+  <script src="/js/swipe.min.js"></script>
+  <script type="text/javascript">
   var bullets = document.getElementById('position').getElementsByTagName('li');
   Swipe(document.getElementById('mySwipe'), {
     auto: 2000,

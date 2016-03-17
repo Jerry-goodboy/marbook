@@ -114,3 +114,8 @@ body,html{height:100%;-webkit-tap-highlight-color:transparent}
 
 .bk_back{left: 10px;}
 .bk_menu{right: 10px;}
+
+/* 底部标签 */
+.bk_content {margin-bottom: 50px;}
+.bk_fix_bottom {position: fixed; bottom: 0; width: 100%; background-color: #eeeeee;}
+.bk_half_area {width: 45%; padding: 5px 2%; display: inline-block}

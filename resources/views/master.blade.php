@@ -6,6 +6,8 @@
     <title>@yield('title')</title>
     <link rel="stylesheet" href="/css/weui.css">
     <link rel="stylesheet" href="/css/book.css">
+    <link rel="stylesheet" href="/css/swipe.css">
+
 </head>
 <body>
     <div class="bk_title_bar">
