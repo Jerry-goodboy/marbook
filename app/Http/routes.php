@@ -27,8 +27,8 @@ Route::get('/login', 'View\MemberController@toLogin');
 Route::get('/register', 'View\MemberController@toRegister');
 
 Route::get('/category', 'View\BookController@toCategory');
-Route::get('/category/product/{category_id}', 'View\BookController@productByCategoryId');
-
+Route::get('/category/products/{category_id}', 'View\BookController@productByCategoryId');
+Route::get('/product/{product_id}', 'View\BookController@toPdtContent');
 
 /**
  * 接口---请求

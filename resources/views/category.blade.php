@@ -19,8 +19,6 @@
     </div>
 
     <div class="weui_cells weui_cells_access category_list">
-
-
     </div>
 
 @endsection
@@ -54,10 +52,9 @@
                         setTimeout(function() {$('.bk_toptips').hide();}, 2000);
                         return;
                     }
-
                     $('.category_list').html('');
                     for(var i=0;i<data.categorys.length;i++) {
-                        var url_product = 'cate'  ;
+                        var url_product = '/category/products/' + data.categorys[i].id;
                         var cate = '<a class="weui_cell" href="'+url_product+'">'+
                                 '<div class="weui_cell_bd weui_cell_primary">'+
                                 '<p>'+data.categorys[i].name+'</p>'+
