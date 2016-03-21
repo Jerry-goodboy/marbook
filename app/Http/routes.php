@@ -30,6 +30,8 @@ Route::get('/category', 'View\BookController@toCategory');
 Route::get('/category/products/{category_id}', 'View\BookController@productByCategoryId');
 Route::get('/product/{product_id}', 'View\BookController@toPdtContent');
 
+Route::get('/cart', 'View\CartController@toCart');//到达购物车界面
+
 /**
  * 接口---请求
  */
@@ -41,6 +43,8 @@ Route::group(['prefix' => 'service'], function(){
     Route::post('register', 'Service\MemberController@register');//注册请求
     Route::post('login', 'Service\MemberController@login');//登录
     Route::get('category/parent_id/{parent_id}','Service\BookController@getCategoryByParentId');
+    Route::get('cart/add/{product_id}','Service\CartController@addCart');
+    Route::get('cart/delete', 'Service\CartController@deleteCart');//重购物车中删除
 });
 
 

@@ -46,10 +46,10 @@
 
 <div class="bk_fix_bottom">
   <div class="bk_half_area">
-    <button class="weui_btn weui_btn_primary" onclick="_addCart();">加入购物车</button>
+    <button class="weui_btn weui_btn_primary" onclick="addCart();">加入购物车</button>
   </div>
   <div class="bk_half_area">
-    <button class="weui_btn weui_btn_default" onclick="_toCart()">查看购物车(<span id="cart_num" class="m3_price">{{$count}}</span>)</button>
+    <button class="weui_btn weui_btn_default" onclick="toCart()">查看购物车(<span id="cart_num" class="m3_price">{{$count}}</span>)</button>
   </div>
 </div>
 
@@ -72,7 +72,7 @@
     }
   });
 
-  function _addCart() {
+  function addCart() {
     var product_id = "{{$product->id}}";
     $.ajax({
       type: "GET",
@@ -93,6 +93,7 @@
           return;
         }
 
+        //设置购物车中显示数量
         var num = $('#cart_num').html();
         if(num == '') num = 0;
         $('#cart_num').html(Number(num) + 1);
@@ -106,7 +107,7 @@
     });
   }
 
-  function _toCart() {
+  function toCart() {
     location.href = '/cart';
   }
 </script>
