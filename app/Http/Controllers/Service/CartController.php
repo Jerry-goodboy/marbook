@@ -19,27 +19,30 @@ class CartController extends Controller
 
         //判断用户是否登录
         $member = $request->session()->get('member','');
+
+
         if ($member != '') {
-            $cartItems = CartItem::where('member_id',$member->id)-get();
+            $cartItems = CartItem::where('member_id',$member->id)->get();
             $exit = false;
-            //判断当前添加商品在用户的购物车中是否存在
-            foreach ($cartItems as $cartItem) {
-                if ($cartItem->product_id == $product_id) {
-                    //存在--则添加增加购物车中的数量
-                    $exit = true;
-                    $cartItem->count ++;
-                    $cartItem->save();
-                    break;
+                //判断当前添加商品在用户的购物车中是否存在{}
+            if ($cartItems != null) {
+                foreach ($cartItems as $cartItem) {
+                    if ($cartItem->product_id == $product_id) {
+                        //存在--则添加增加购物车中的数量
+                        $exit = true;
+                        $cartItem->count ++;
+                        $cartItem->save();
+                        break;
+                    }
                 }
             }
-
             if (!$exit) {
                 //不存在
                 $cart_item = new CartItem;
-                $cartItem->product_id = $product_id;
-                $cartItem->count = 1;
+                $cart_item->product_id = $product_id;
+                $cart_item->count = 1;
                 $cart_item->member_id = $member->id;
-                $cartItem->save();
+                $cart_item->save();
 
             }
             //登录状态无需处理session中---直接处理用户数据库中得数据

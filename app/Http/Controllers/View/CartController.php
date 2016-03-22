@@ -54,7 +54,7 @@ class CartController extends Controller
             //获取每一个key--value--string
             $index = strpos($bk_cart_item,':');
             $product_id = substr($bk_cart_item,0,$index);
-            $count = substr($bk_cart_arr,$index+1);
+            $count = substr($bk_cart_item,$index+1);
 
             $exist = false;
             //比较在数据库中是否存在--更新数据库
@@ -77,13 +77,13 @@ class CartController extends Controller
                 $cart->member_id = $id;
                 $cart->count = $count;
                 $cart->save();
-                $cart->Product = Product::find($cart->product_id);
+                $cart->product = Product::find($cart->product_id);
                 array_push($cart_items_arr,$cart);
             }
         }
 
         foreach ($cart_items as $cart) {
-            $cart->Product = Product::find($cart->product_id);
+            $cart->product = Product::find($cart->product_id);
             array_push($cart_items_arr,$cart);
         }
         return $cart_items_arr;

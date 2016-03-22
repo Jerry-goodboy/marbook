@@ -10,9 +10,10 @@ use App\Http\Controllers\Controller;
 
 class MemberController extends Controller
 {
-    public function toLogin($value='')
+    public function toLogin(Request $value)
     {
-        return view('login');
+        $return_url = $value->input("return_url",'');
+        return view('login')->with("return_url",urldecode($return_url));
     }
 
     public function toRegister($value='')
