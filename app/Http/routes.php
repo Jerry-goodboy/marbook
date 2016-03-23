@@ -33,6 +33,7 @@ Route::get('/product/{product_id}', 'View\BookController@toPdtContent');
 
 Route::group(['middleware' => 'check.login'], function(){
     Route::get('/cart', 'View\CartController@toCart');//到达购物车界面
+    Route::match(['get', 'post'], '/order_commit', 'View\OrderController@toOrderCommit');//到达订单生成界面
 });
 
 /**
@@ -50,7 +51,7 @@ Route::group(['prefix' => 'service'], function(){
     Route::get('cart/delete', 'Service\CartController@removeCart');//重购物车中删除
 });
 
-//Route::match(['get', 'post'], '/order_commit', 'View\OrderController@toOrderCommit')->middleware(['check.cart', 'check.weixin']);
+
 //到达订单列表---就需要强制用户登录
 //Route::get('/order_list', 'View\OrderController@toOrderList')->middleware(['check.login']);
 

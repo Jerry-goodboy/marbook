@@ -75,17 +75,8 @@
       return;
     }
 
-    // 如果是微信浏览器
-    var is_wx = 0;
-    var ua = navigator.userAgent.toLowerCase();//获取判断用的对象
-    if (ua.match(/MicroMessenger/i) == "micromessenger") {
-      is_wx = 1;
-    }
-
-    location.href = '/order_commit?product_ids=' + product_ids_arr + '&is_wx=' + is_wx;
-    // $('input[name=product_ids]').val(product_ids_arr+'');
-    // $('input[name=is_wx]').val(is_wx+'');
-    // $('#order_commit').submit();
+    //取出产品id---提交订单
+    location.href = '/order_commit?product_ids=' + product_ids_arr;
   }
 
 

@@ -119,3 +119,9 @@ body,html{height:100%;-webkit-tap-highlight-color:transparent}
 .bk_content {margin-bottom: 50px;}
 .bk_fix_bottom {position: fixed; bottom: 0; width: 100%; background-color: #eeeeee;}
 .bk_half_area {width: 45%; padding: 5px 2%; display: inline-block}
+
+.bk_icon {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
